@@ -6,4 +6,4 @@ The Greentopia Japan website: plain HTML, CSS and JavaScript with no build step.
 - Contact form submissions go to Netlify Forms (Netlify dashboard → Forms), with email notifications set up there.
 - `404.html` is shown for any missing page. `thanks.html` is shown after the contact form is sent.
 
-Source: prototype v13. Hero images are still placeholders until the photos are added.
+Source: prototype v13. Photos are web-sized copies (in `images/`); the full-size originals stay in Google Drive.
