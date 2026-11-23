@@ -31,3 +31,8 @@ a.event-row:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-col
 @media(max-width:900px){.hero-photo,.hero-premium .hero-photo{height:260px}}
 .logo-strip{display:flex;flex-wrap:wrap;justify-content:center}.logo-strip div{flex:0 0 calc(20% - 12px)}
 @media(max-width:900px){.logo-strip div{flex-basis:calc(33.33% - 7px)}}
+
+.session-card .event-type{display:block}.session-card h3{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px}
+.price{color:var(--orange)}.camp-details{margin-top:15px}.camp-details strong{color:var(--forest)}
+.fine-print{margin-top:14px;font-size:13px;color:var(--muted)}.fine-print a{color:var(--green);font-weight:700}
+.feature-card .event-type{display:block}
