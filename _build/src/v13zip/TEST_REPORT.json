@@ -1,0 +1,25 @@
+{
+  "html_pages": 20,
+  "links_checked": 420,
+  "checks": {
+    "Footer tagline applied": true,
+    "Seedling form linked": true,
+    "Public tower price preserved at ¥8,000": true,
+    "Education overview populated": true,
+    "Education FAQ populated": true,
+    "Labs FAQ populated": true,
+    "After School Activities populated": true,
+    "Partnerships populated": true,
+    "Restaurants populated": true,
+    "Hotels populated": true,
+    "About populated": true,
+    "Contact direct email populated": true,
+    "Contact remains streamlined": true,
+    "Events remain streamlined": true,
+    "No external icon libraries": true,
+    "Education sections preserved": true,
+    "Green Spaces sections preserved": true
+  },
+  "errors": [],
+  "status": "PASS"
+}

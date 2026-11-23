@@ -1,2 +1,5 @@
 /summer-camps.html  /camps.html  301
 /summer-camps  /camps  301
+/ja/summer-camps.html  /ja/camps.html  301
+/_build/*  /404.html  404!
+/ja/*  /ja/404.html  404
