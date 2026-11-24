@@ -42,3 +42,15 @@ html[lang=ja] .eyebrow{letter-spacing:.08em}
 .price{color:var(--orange)}.camp-details{margin-top:15px}.camp-details strong{color:var(--forest)}
 .fine-print{margin-top:14px;font-size:13px;color:var(--muted)}.fine-print a{color:var(--green);font-weight:700}
 .feature-card .event-type{display:block}
+
+.plan-trial{margin-top:16px;padding:18px;border:1px solid var(--green);border-radius:19px;background:var(--mint)}
+.plan-trial p{margin:8px 0 0;color:var(--muted)}.plan-head h3,.plan-card h3{margin:6px 0;color:var(--forest);display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px}
+.plan-step{margin:22px 0 10px;color:var(--forest)}.plan-featured{border:2px solid var(--green)}
+.plan-notes{margin-top:16px}.area-box{margin-top:14px;padding:14px 18px;border-radius:16px;background:#EAF3FA;color:var(--ink)}
+.area-box p{margin:4px 0}.area-box a{color:var(--green);font-weight:700}
+.variety-list{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 18px;padding:0;list-style:none}
+.variety-list li{padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--mint);font-size:14px;color:var(--forest)}
+.season-list li{display:flex;flex-direction:column;border-radius:14px}.season-list small{color:var(--muted);font-size:12px}
+.sun{color:var(--orange)}.season-box{background:linear-gradient(135deg,#fff,var(--mint))}.content-section h3{color:var(--forest)}
+.support-card{display:flex;flex-direction:column;gap:6px}.support-card .button{margin-top:auto;align-self:flex-start}
+.footer-links a[href$="support.html"]{font-weight:700}

@@ -9,6 +9,10 @@ import shutil
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import pages_extra as X  # noqa: E402
+import troubleshooter  # noqa: E402
+
 SRC, OUT = Path(sys.argv[1]), Path(sys.argv[2])
 SKIP = {"README.md", "TEST_REPORT.json", "event-detail-sample.html", "desktop.ini"}  # from the v13 source
 IG = "https://www.instagram.com/greentopiajapan/"
@@ -57,6 +61,12 @@ def common(s, fname):
                   "<p>Tell us your space and we’ll recommend the right tower.</p>")
     s = s.replace("<p>FORM PLACEHOLDER: Replace with live tower-order form URL.</p>",
                   "<p>Tell us your space and we’ll recommend the right tower.</p>")
+    s = s.replace('<div class="footer-links"><a href="mailto:info@greentopia.jp">',
+                  '<div class="footer-links"><a href="support.html">Customer support</a>'
+                  '<a href="mailto:info@greentopia.jp">')
+    s = s.replace('<a href="contact.html">Contact</a><div class="mobile-social">',
+                  '<a href="contact.html">Contact</a><a href="support.html">Customer support</a>'
+                  '<div class="mobile-social">')
     for old, new in PRICE_FIXES:
         s = s.replace(old, new)
     if "¥10,000" in s:
@@ -118,6 +128,9 @@ PAGE_FIXES = {
         ('<select id="interest-select">', '<select id="interest-select" name="interest">'),
         ('<option value="workshops">Workshop</option>',
          '<option value="workshops">Workshop</option><option value="camps">Camps</option>'),
+        ('<option value="tower">Tower lease or purchase</option>',
+         '<option value="tower">Tower lease</option><option value="customer-support">Existing customer: visit, '
+         'cleaning, or supplies</option>'),
         ('<input type="file"/>', '<input type="file" name="attachment"/>'),
         ('<textarea placeholder', '<textarea name="message" required placeholder'),
         ('<button class="button cta-orange">', '<button type="submit" class="button cta-orange">'),
@@ -128,6 +141,10 @@ PAGE_FIXES = {
          "register.</p>"),
         ("<p>GOOGLE FORM PLACEHOLDER: Replace with the live seedling order form URL.</p>",
          "<p>Order seedlings through our Google Form.</p>"),
+        ('<h3>Order Seedlings Form</h3><p>Order seedlings through our Google Form.</p></a>',
+         '<h3>Order Seedlings Form</h3><p>Order seedlings through our Google Form.</p></a>'
+         '<a class="feature-card" href="support.html"><h3>Customer Support</h3><p>Already growing with us? '
+         'Troubleshooting, seedlings, and visit requests.</p></a>'),
     ],
     "events.html": [
         ("<p>May 2026: Family Workshop at Ryozan Park — 12 families, tower planting, and salad tasting. March 2026: "
@@ -145,6 +162,39 @@ PAGE_FIXES = {
          '</span><h3>Winter Discovery Camp 2026</h3><p>9:00–17:30 · J\'s International School, Motoazabu · '
          'Mornings, afternoons, or full days, ages 5 and up. Registration open.</p></div>'
          '<span class="event-arrow">→</span></a>'),
+    ],
+    "about.html": [
+        ("We deliver, set up, and walk you through everything. At the end of your lease you can purchase, renew, "
+         "or return the tower.",
+         "We deliver, set up, and walk you through everything. At the end of your lease you can renew or return "
+         "the tower."),
+        ("Seedlings are ¥200–300 per plant, depending on variety. Order as many or as few as you need, anytime.",
+         "Seedlings are ¥200–300 per rockwool cube (one planting port), depending on variety. Each cube usually "
+         "holds 2–4 plants. Order as many or as few as you need, anytime."),
+        ("easiest starting point.</p>",
+         'easiest starting point. <a href="grow.html">See the full list of varieties</a>.</p>'),
+    ],
+    "green-spaces.html": [
+        ("Leases start with a 3-month trial at ¥13,000/month. After that, choose the plan that fits: ¥11,000/month "
+         "if you care for the tower yourself, ¥15,000/month with a monthly service visit, or ¥18,000/month with a "
+         "weekly service visit. We deliver, set up, and walk you through everything. At the end of your lease, you "
+         "can renew, purchase the tower, or we pick it up and reset. No long-term commitment required.",
+         'Home tower leases start with a 3-month trial at ¥13,000/month, then from ¥11,000/month depending on how '
+         'much care you want from us. We deliver, set up, and walk you through everything. '
+         '<a href="home-towers.html#plans">See the lease plans</a>. For buildings, offices, and community spaces, we '
+         'quote each project after a free site assessment.'),
+        ("<h2>Starter kits and maintenance</h2>", "<h2>Seedlings and supplies</h2>"),
+        ("New growers can add a Starter Kit, approximately ¥4,000–5,000, that includes nutrients, pH buffers, and an "
+         "initial set of seedlings. Seedlings can be reordered anytime from our online form at ¥200–300 per plant. "
+         "For hands-off growing, choose a plan with monthly or weekly service visits.",
+         "Trial customers get a free starter set. If you already have a tower or grow hydroponically at home, we "
+         "can also supply starter sets, nutrients, and seedlings. Seedlings are ¥200–300 per rockwool cube, and each "
+         'cube usually holds 2–4 plants. Order seedlings through our online form, or <a href="support.html">contact '
+         "us</a> for other supplies. For hands-off growing, choose a plan with monthly or weekly service visits."),
+        ('<h3>Community Spaces</h3><p>Share farms, workshops, and neighborhood engagement.</p></a>',
+         '<h3>Community Spaces</h3><p>Share farms, workshops, and neighborhood engagement.</p></a>'
+         '<a class="feature-card" href="grow.html"><h3>What You Can Grow</h3>'
+         '<p>Varieties for indoor and outdoor towers.</p></a>'),
     ],
     "education.html": [
         ("<h3>Summer Camps</h3><p>Seasonal and vacation programs.</p>",
@@ -272,7 +322,7 @@ def add_photos(s, fname):
 CTA_INTEREST = {  # page -> contact-form topic for the hero button
     "about": "", "after-school-activities": "after-school-activities", "community-spaces": "site-assessment",
     "education": "school-program", "green-spaces": "tower", "greentopia-labs": "greentopia-labs",
-    "home-towers": "home-tower", "hotels": "partnership", "integrated-curriculum": "school-program",
+    "hotels": "partnership", "integrated-curriculum": "school-program",
     "offices-coworking": "site-assessment", "partnerships": "site-assessment",
     "residential-buildings": "site-assessment", "restaurants": "partnership", "sponsorship": "sponsorship",
     "workshops": "workshops",
@@ -335,6 +385,21 @@ def camps_page(summer_src):
     return add_photos(page, "camps.html")
 
 
+def hero_img(key, alt):
+    return f'<img class="hero-image hero-photo" src="images/{key}.webp" alt="{alt}" loading="lazy">'
+
+
+def new_page(template, title, desc, main):
+    head, rest = template.split("<main", 1)
+    tail = rest.split("</main>", 1)[1]
+    head = re.sub(r"<title>.*?</title>", f"<title>{title} | Greentopia Japan</title>", head)
+    head = re.sub(r'(<meta (?:name="description"|property="og:description") content=")[^"]*"',
+                  lambda m: m.group(1) + html.escape(desc, quote=True) + '"', head)
+    head = re.sub(r'(<meta property="og:title" content=")[^"]*"',
+                  lambda m: m.group(1) + html.escape(title, quote=True) + ' | Greentopia Japan"', head)
+    return head + main + tail
+
+
 def site_wide(s, fname):
     """Changes that apply to every page after the per-page fixes."""
     s = s.replace('href="summer-camps.html"', 'href="camps.html"')
@@ -366,10 +431,13 @@ def main():
             s = site_wide(add_photos(apply_fixes(common(s, rel.name), rel.name), rel.name), rel.name)
             if "PLACEHOLDER" in s.replace("image-placeholder", "").replace("HERO IMAGE PLACEHOLDER", ""):
                 print(f"warning: leftover placeholder text in {rel}")
+            if rel.name == "home-towers.html":
+                main = X.HOME_TOWERS_MAIN.replace("HERO_PLACEHOLDER", hero_img("home-towers", HERO_ALT["home-towers"]))
+                s = re.sub(r"<main.*?</main>", lambda m: main, s, count=1, flags=re.S)
             pages[rel.name] = s
             dest.write_text(s, encoding="utf-8")
         elif p.name == "styles.css":
-            dest.write_text(p.read_text(encoding="utf-8") + EXTRA_CSS + CAMPS_CSS, encoding="utf-8")
+            dest.write_text(p.read_text(encoding="utf-8") + EXTRA_CSS + CAMPS_CSS + X.EXTRA_CSS, encoding="utf-8")
         else:
             shutil.copy2(p, dest)
     if IMAGES.exists():  # fresh photo exports replace the published set; otherwise keep what's there
@@ -380,6 +448,21 @@ def main():
                                     "/ja/summer-camps.html  /ja/camps.html  301\n/_build/*  /404.html  404!\n"
                                     "/ja/*  /ja/404.html  404\n",
                                     encoding="utf-8")
+    tpl = pages["about.html"]
+    (OUT / "grow.html").write_text(new_page(
+        tpl, "What You Can Grow",
+        "Leafy greens, herbs, fruiting vegetables, and flowers you can grow in a Greentopia hydroponic tower, "
+        "indoors or outdoors, plus this season's picks.",
+        X.grow_main().replace("HERO_PLACEHOLDER", hero_img(
+            "grow", "Freshly harvested kale, chard, herbs, cucumbers, and tomatoes from a tower"))), encoding="utf-8")
+    (OUT / "support.html").write_text(new_page(
+        tpl, "Customer Support",
+        "Help for Greentopia growers: tower troubleshooting, seedling orders, maintenance visits, and supplies.",
+        X.SUPPORT_MAIN.replace("HERO_PLACEHOLDER", hero_img(
+            "support", "Harvesting fresh bok choy from a Greentopia tower"))), encoding="utf-8")
+    kb = troubleshooter.build(Path(__file__).resolve().parent.parent / "src" / "troubleshooter.html",
+                              OUT / "support" / "tower-first-aid.html") // 1024
+    print(f"Tower First Aid: {kb} KB")
     tpl = pages["index.html"]
     (OUT / "thanks.html").write_text(simple_page(
         tpl, "Thank you", "Thanks — we got your message.",

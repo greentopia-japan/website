@@ -36,6 +36,8 @@ PHOTOS = {
     "after-school-activities": ("afterschool_hero.jpg", HERO),
     "greentopia-labs": ("labs_hero.jpg", HERO),
     "workshops": (M + "Workshop/S__27443209_0.jpg", HERO),
+    "grow": (M + "Harvest/PXL_20230807_085859509.jpg", HERO),
+    "support": (M + "Harvest/PXL_20230424_012147938.jpg", HERO),
     "card-education": ("home_card_education.jpg", CARD),
     "card-green-spaces": ("home_card_greenspaces.jpg", CARD),
     "card-partnerships": ("home_card_partnerships.jpg", CARD),

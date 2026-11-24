@@ -114,7 +114,9 @@ def relink(soup, page_name):
     for el in soup.find_all(href=True) + soup.find_all(src=True):
         attr = "href" if el.has_attr("href") else "src"
         v = el[attr]
-        if v.startswith(ROOT_FILES):
+        if v.startswith("support/tower-first-aid.html"):
+            el[attr] = "../" + v + "?lang=ja"
+        elif v.startswith(ROOT_FILES):
             el[attr] = "../" + v
         elif v.startswith("/") and v.endswith(".html"):
             el[attr] = "/ja" + v
@@ -178,7 +180,7 @@ def review(units_json, tsv, xlsx):
     units = json.loads(Path(units_json).read_text(encoding="utf-8"))
     table = load_ja(tsv)
     order = ["index", "education", "after-school-activities", "greentopia-labs", "integrated-curriculum",
-             "camps", "workshops", "green-spaces", "home-towers", "residential-buildings",
+             "camps", "workshops", "green-spaces", "home-towers", "grow", "support", "residential-buildings",
              "offices-coworking", "community-spaces", "partnerships", "restaurants", "hotels",
              "sponsorship", "events", "about", "contact", "thanks", "404"]
     names = {"index": "Home", "404": "Page not found"}
