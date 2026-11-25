@@ -5,6 +5,9 @@
 /business  /partnerships.html  301
 /project-spotlight-1  /education.html  301
 /project-spotlight-1-1  /education.html  301
+# Old Wix language subdomains (once added as domain aliases in Netlify)
+https://ja.greentopia.jp/*  https://www.greentopia.jp/ja/  301!
+https://en.greentopia.jp/*  https://www.greentopia.jp/  301!
 # Renamed pages
 /summer-camps.html  /camps.html  301
 /summer-camps  /camps  301
