@@ -1,5 +1,14 @@
+# Old Wix pages (www.greentopia.jp) -> new pages
+/home-1  /  301
+/home-1-1  /  301
+/about-us  /about.html  301
+/business  /partnerships.html  301
+/project-spotlight-1  /education.html  301
+/project-spotlight-1-1  /education.html  301
+# Renamed pages
 /summer-camps.html  /camps.html  301
 /summer-camps  /camps  301
 /ja/summer-camps.html  /ja/camps.html  301
+# Private build files and Japanese 404
 /_build/*  /404.html  404!
 /ja/*  /ja/404.html  404

@@ -444,10 +444,16 @@ def main():
         if (OUT / "images").exists():
             shutil.rmtree(OUT / "images")
         shutil.copytree(IMAGES, OUT / "images")
-    (OUT / "_redirects").write_text("/summer-camps.html  /camps.html  301\n/summer-camps  /camps  301\n"
-                                    "/ja/summer-camps.html  /ja/camps.html  301\n/_build/*  /404.html  404!\n"
-                                    "/ja/*  /ja/404.html  404\n",
-                                    encoding="utf-8")
+    (OUT / "_redirects").write_text(
+        "# Old Wix pages (www.greentopia.jp) -> new pages\n"
+        "/home-1  /  301\n/home-1-1  /  301\n/about-us  /about.html  301\n/business  /partnerships.html  301\n"
+        "/project-spotlight-1  /education.html  301\n/project-spotlight-1-1  /education.html  301\n"
+        "# Renamed pages\n"
+        "/summer-camps.html  /camps.html  301\n/summer-camps  /camps  301\n"
+        "/ja/summer-camps.html  /ja/camps.html  301\n"
+        "# Private build files and Japanese 404\n"
+        "/_build/*  /404.html  404!\n/ja/*  /ja/404.html  404\n",
+        encoding="utf-8")
     tpl = pages["about.html"]
     (OUT / "grow.html").write_text(new_page(
         tpl, "What You Can Grow",
@@ -480,6 +486,20 @@ def main():
     missing = i18n.build(OUT, Path(__file__).resolve().parent.parent / "src" / "i18n" / "ja.tsv")
     if missing:
         raise SystemExit(f"{len(missing)} English texts have no Japanese yet (see above)")
+    # Sitemap and robots.txt for search engines
+    site = "https://greentopia.jp"
+    names = sorted(p.name for p in OUT.glob("*.html") if p.name not in ("404.html", "thanks.html"))
+    urls = []
+    for n in names:
+        path = "" if n == "index.html" else n
+        alts = (f'<xhtml:link rel="alternate" hreflang="en" href="{site}/{path}"/>'
+                f'<xhtml:link rel="alternate" hreflang="ja" href="{site}/ja/{path}"/>')
+        urls += [f"<url><loc>{site}/{path}</loc>{alts}</url>", f"<url><loc>{site}/ja/{path}</loc>{alts}</url>"]
+    (OUT / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+        'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + "\n".join(urls) + "\n</urlset>\n", encoding="utf-8")
+    (OUT / "robots.txt").write_text(f"User-agent: *\nDisallow: /_build/\nSitemap: {site}/sitemap.xml\n",
+                                    encoding="utf-8")
 
 
 main()
