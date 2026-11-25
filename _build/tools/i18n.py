@@ -20,7 +20,7 @@ BLOCKS = ["title", "p", "h1", "h2", "h3", "h4", "li", "blockquote", "button", "o
 ATTRS = ["alt", "placeholder"]
 META = [("name", "description"), ("property", "og:title"), ("property", "og:description")]
 ROOT_FILES = ("styles.css", "script.js", "G_only.png", "greentopia_wordmark.png", "images/", "logos/")
-SITE = "https://greentopia.jp"
+SITE = "https://www.greentopia.jp"
 SKIP_PAGES = {"ja"}
 
 

@@ -315,7 +315,7 @@ def add_photos(s, fname):
     # Social share image (absolute URL so it works once greentopia.jp points here)
     s = s.replace('<meta property="og:type" content="website">',
                   '<meta property="og:type" content="website">'
-                  '<meta property="og:image" content="https://greentopia.jp/images/og.jpg">')
+                  '<meta property="og:image" content="https://www.greentopia.jp/images/og.jpg">')
     return s
 
 
@@ -487,7 +487,7 @@ def main():
     if missing:
         raise SystemExit(f"{len(missing)} English texts have no Japanese yet (see above)")
     # Sitemap and robots.txt for search engines
-    site = "https://greentopia.jp"
+    site = "https://www.greentopia.jp"
     names = sorted(p.name for p in OUT.glob("*.html") if p.name not in ("404.html", "thanks.html"))
     urls = []
     for n in names:
